@@ -1,0 +1,4 @@
+import Papa from "papaparse";
+const CSV_URL="https://docs.google.com/spreadsheets/d/12lZupylxLAKUVQQJZIC8GJmvQiUwpbAAQ3BduAu_rig/export?format=csv&gid=1804614833";
+export async function getRotationData(){const r=await fetch(CSV_URL);const t=await r.text();const rows=Papa.parse(t).data;const crystal=rows[1]?.[0]||"Unknown";const groups={};let current=null;for(let i=4;i<50;i++){const v=rows[i]?.[0]?.trim();if(!v) continue;if(["Singles","Rare Singles","Hordes"].includes(v)){current=v;groups[v]=[]}else if(current){groups[current].push(v)}}return {crystal,groups};}
+export async function getPokemonSprite(name){const r=await fetch(`https://pokeapi.co/api/v2/pokemon/${name.toLowerCase()}`);if(!r.ok) return null;const d=await r.json();return d.sprites.other['official-artwork'].front_default||d.sprites.front_default;}

@@ -1,0 +1,1 @@
+export default function PokemonCard({name,image,rare}){return <div className={`card ${rare ? "card-rare" : ""}`}><img src={image} alt={name}/><div>{name}</div></div>}
